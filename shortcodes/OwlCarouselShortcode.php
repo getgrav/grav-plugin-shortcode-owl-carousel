@@ -16,25 +16,21 @@ class OwlCarouselShortcode extends Shortcode
             $this->shortcode->addAssets('js', 'plugin://shortcode-owl-carousel/js/owl.carousel.min.js');
             $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.carousel.min.css');
             $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.theme.default.min.css');
+            // load animate.css if required
+            if ($sc->getParameter('animate') == 'true') {
+                $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/animate.css');
+            }
 
             $hash = $this->shortcode->getId($sc);
 
             $output = $this->twig->processTemplate('partials/owl-carousel.html.twig', [
                 'hash' => $hash,
-//                'active' => $sc->getParameter('active', 0),
-//                'position' => $sc->getParameter('position', 'top-left'),
-//                'theme' => $sc->getParameter('theme', $this->config->get('plugins.shortcode-ui.theme.tabs', 'default')),
-                'owl_items' => $this->shortcode->getStates($hash),
+                'params' => $sc->getParameters(),
+                'owl_items' => $sc->getContent(),
             ]);
 
             return $output;
         });
 
-        $this->shortcode->getHandlers()->add('owl-item', function(ShortcodeInterface $sc) {
-            // Add tab to tab state using parent tabs id
-            $hash = $this->shortcode->getId($sc->getParent());
-            $this->shortcode->setStates($hash, $sc);
-            return;
-        });
     }
 }
