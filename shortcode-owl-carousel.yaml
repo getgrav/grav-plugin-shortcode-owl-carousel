@@ -1,0 +1,6 @@
+enabled: true
+enabled_admin: false
+theme:
+  tabs: default
+
+

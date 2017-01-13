@@ -1,0 +1,16 @@
+{% set owl_id = 'owl-' ~ hash %}
+<div class="owl-carousel" id="{{ owl_id }}">
+    {% for item in owl_items %}
+        {{ item.getContent() }}
+    {% endfor %}
+</div>
+<script>
+    $(document).ready(function(){
+        $("#{{ owl_id }}").owlCarousel({
+            items: 1,
+            loop: true,
+            margin: 10
+        });
+    });
+</script>
+
