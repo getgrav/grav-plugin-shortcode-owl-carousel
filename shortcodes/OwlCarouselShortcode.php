@@ -20,6 +20,10 @@ class OwlCarouselShortcode extends Shortcode
             if ($sc->getParameter('animate') == 'true') {
                 $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/animate.css');
             }
+            // load built-in-css
+            if ($this->config->get('plugins.shortcode-owl-carousel.built_in_css', false)) {
+                $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/shortcode.owl.carousel.css');
+            }
 
             $hash = $this->shortcode->getId($sc);
 

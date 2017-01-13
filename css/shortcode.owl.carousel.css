@@ -1,0 +1,50 @@
+.owl-carousel .owl-nav {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next {
+    font-size: 0;
+    background: rgba(0,0,0,0.4);
+    color: rgba(255,255,255,0.5);
+}
+
+.owl-carousel .owl-nav .owl-prev:hover,
+.owl-carousel .owl-nav .owl-next:hover {
+    background: rgba(0,0,0,0.7);
+    color: rgba(255,255,255,0.9);
+}
+
+.owl-carousel .owl-nav .owl-prev:after,
+.owl-carousel .owl-nav .owl-next:after {
+    display: inline-block;
+    font-size: 50px;
+    line-height: 32px;
+    min-height: 40px;
+    min-width: 40px;
+}
+
+.owl-carousel .owl-nav .owl-prev {
+    float: left;
+}
+
+.owl-carousel .owl-nav .owl-next {
+    float: right;
+}
+
+.owl-carousel .owl-nav .owl-prev:after {
+    content: "\2039";
+}
+
+.owl-carousel .owl-nav .owl-next:after {
+
+    content: "\203a"
+}
