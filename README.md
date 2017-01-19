@@ -1,5 +1,7 @@
 # Grav Shortcode Owl Carousel Plugin
 
+![](assets/owl-carousel.jpg)
+
 ## About
 
 The **Shortcode Owl Carousel** plugin makes it trivial to create []Owl Carousel](https://owlcarousel2.github.io/OwlCarousel2/) based sliders from within your page content. Owl Carousel provides a wide range of features and functionality that are directly accessible via shortcode attributes.  Features include:
