@@ -20,7 +20,6 @@ class ShortcodeOwlCarouselPlugin extends Plugin
     {
         return [
             'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
-//            'onTwigExtensions' => ['onTwigExtensions', 0],
             'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
         ];
     }
@@ -32,12 +31,6 @@ class ShortcodeOwlCarouselPlugin extends Plugin
     {
         $this->grav['twig']->twig_paths[] = __DIR__ . '/templates';
     }
-
-//    public function onTwigExtensions()
-//    {
-//        require_once(__DIR__ . '/twig/ShortcodeUITwigExtension.php');
-//        $this->grav['twig']->twig->addExtension(new ShortcodeUiTwigExtension());
-//    }
 
     /**
      * Initialize configuration

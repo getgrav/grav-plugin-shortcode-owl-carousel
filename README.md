@@ -1,200 +1,370 @@
-# Grav Shortcode UI Plugin
+# Grav Shortcode Owl Carousel Plugin
 
 ## About
 
-The **Shortcode UI** plugin provides several useful UI elements for Grav as _shortcodes_. As such it requires the **Shortcode Core** plugin to function.
+The **Shortcode Owl Carousel** plugin makes it trivial to create []Owl Carousel](https://owlcarousel2.github.io/OwlCarousel2/) based sliders from within your page content. Owl Carousel provides a wide range of features and functionality that are directly accessible via shortcode attributes.  Features include:
 
-It currently provides:
-
-* Tabs
-* CSS browser wrapper
-* Callout for images with hover-tooltips
-* Dual image comparison with drag handle
-* Variety of animated text effects
+* Infinity Loop
+* Center item
+* Smart Speed
+* Stage Padding
+* Item Margin
+* Ability to make almost all options responsive
+* Various Widths
+* Callback Events
+* RTL
+* YouTube/Vimeo/vzaar support (fetching thumbnails as well)
+* Anchors navigation
+* Merged Items
+* and more...
 
 ## Installation
 
 Typically a plugin should be installed via [GPM](http://learn.getgrav.org/advanced/grav-gpm) (Grav Package Manager):
 
 ```
-$ bin/gpm install shortcode-ui
+$ bin/gpm install shortcode-grav-carousel
 ```
 
 Alternatively it can be installed via the [Admin Plugin](http://learn.getgrav.org/admin-panel/plugins)
 
-## Configuration Defaults
 
-The **Shortcode Core** plugin only has a few options to configure.  The default values are:
+## Basic Example
 
-```yaml
-enabled: true
-active: true
-enabled_admin: true
-load_fontawesome: false
-```
-
-* `enabled: true|false` toggles if the shortcodes plugin is turned on or off
-* `active: true|false` toggles if shortcodes will be enabled site-wide or not
-* `active_admin: true|false` toggles if shortcodes will be processed in the admin plugin
-* `load_fontawesome: true|false` toggles if the fontawesome icon library should be loaded or not
-
-## Configuration Modifications
-
-The best approach to make modifications to the core plugin settings is to copy the `shortcode-core.yaml` file from the plugin into your `user/config/plugins/` folder (create it if it doesn't exist).  You can modify the settings there.
-
-> NOTE: If you have the admin plugin installed, you can make modifications to the settings via the **Plugins** page and it will create that overridden file automatically.
-
-## Per-Page Configuration
-
-Sometimes you may want to only enable shortcodes on a _page-by-page_ basis.  To accomplish this set your plugin defaults to:
-
-```yaml
-enabled: true
-active: false
-```
-
-This will ensure the plugin is loaded, but not **active**, then on the page you wish to process shortcodes on simply add this to the page header:
-
-```yaml
-shortcode-core:
-    active: true
-```
-
-This will ensure the shortcodes are processed on this page only.
-
-## Available Shortcodes
-
-The core plugin contains a few simple shortcodes that can be used as basic examples:
-
-#### Underline
-
-Underline a section of text
+This is a basic example that shows off how you can easily turn 3 images into a slider:
 
 ```
-This is some [u]bb style underline[/u] and not much else
+[owl-carousel items=1 margin=10 loop=true autoplay=true autoplayHoverPause=true nav=true]
+![](image-1.jpg?cropZoom=1024,300)
+![](image-2.jpg?cropZoom=1024,300)
+![](image-3.jpg?cropZoom=1024,300)
+[/owl-carousel]
 ```
 
-#### Font Size
+In this examaple, we are wrapping 3 markdown-syntax images with the `[owl-carousel][/owl-carousel]` shortcode tag.  Then we are adding shortcode attributes to set some Owl Carousel options. 
 
-Set the size of some text to a specific pixel size
+## Advanced Example
 
-```
-This is [size=30]bigger text[/size]
-```
-
-#### Left Align
-
-Left align the text between this shortcode
+Every first-level HTML element that gets rendered between the shortcode tags, is treated as a slider item.  This can be images, or even HTML div elements that allow for more complex content.  
 
 ```
-[left]This text is left aligned[/left]
+[owl-carousel items=2 margin=10 loop=true]
+<div style="background: url({{ page.media['image-1.jpg'].url }}) 50% 50%;background-size: cover;color:#fff;">
+  <h2>This is panel 1</h2>
+  <p>foo</p>
+</div>
+<div style="background: url({{ page.media['image-2.jpg'].url }}) 50% 50%;background-size: cover;color:#fff;">
+  <h2>This is panel 2</h2>
+  <p>foo</p>
+</div>
+<div style="background: url({{ page.media['image-3.jpg'].url }}) 50% 50%;background-size: cover;color:#fff;">
+  <h2>This is panel 3</h2>
+  <p>foo</p>
+</div>
+[/owl-carousel]
 ```
 
-#### Center Align
+In this example, we put HTML div tags between the shortcode tags, and set the number of items to display to `2`, the margin between items to `10` and the loop option to `true`. We make use of Twig processing to dynamically add the URLs to the images that we are setting as the background of the divs.  Then inside of the divs, we have some HTML content.
 
-Center a selection of text between this shortcode
+| Note: Markdown is not able to be processed within HTML tags, but you can use Twig if you enable Twig processing in the page frontmatter.
 
-```
-[center]This text is centered[/center]
-```
+## Owl Carousel Options
 
-#### Right Align
+Options can be passed to Owl Carousel as attributes of the shortcode.  Numbers can be passed simply as `number=1`, booleans can be entered as `boolean=true`, and strings can be entered between quotes such as `string="foo"` or `string='foo'`.
 
-Right align the text between this shortcode
+The options available are fully documented on the OWL Carousel site: https://owlcarousel2.github.io/OwlCarousel2/docs/api-options.html, but a summary of the current ones appears below:
 
-```
-[right]This text is right aligned[/right]
-```
+### items
+Type: **Number**
+Default: `3`
 
-#### Raw
+The number of items you want to see on the screen.
 
-Do not process the shortcodes between these raw shortcode tags
+### margin
+Type: **Number** 
+Default: `0`
 
-```
-[raw]This is some [u]bb style underline[/u] and not much else[/raw]
-```
+margin-right(px) on item.
 
-#### Safe-Email
+### loop
+Type: **Boolean** 
+Default: `false`
 
-Encode an email address so that it's not so easily 'scrapable' by nefarious scripts.  This one has a couple of options: `autolink` toggle to turn the email into a link, and an `icon` option that lets you pick a font-awesome icon to prefix the email.  Both settings are optional.
+Infinity loop. Duplicate last and first items to get loop illusion.
 
-```
-Safe-Email Address: [safe-email autolink="true" icon="envelope-o"]user@domain.com[/safe-email] 
-```
+### center
+Type: **Boolean**
+Default: `false`
 
-## Developing Shortcode Plugins
+Center item. Works well with even an odd number of items.
 
-The **Shortcode Core** plugin is developed on the back of the [Thunderer Advanced Shortcode Engine](https://github.com/thunderer/Shortcode) and as such loads the libraries and classes required to build 3rd party shortcode plugins.  Also we introduce a new event called `onShortcodeHandlers()` that allows a 3rd party plugin to create and add their own custom handlers.  These are then all processed by the core plugin in one shot.
+### mouseDrag
+Type: **Boolean** 
+Default: `true`
 
-I think examples are the best way to show functionality.  Let's take the `safe-email` shortcode that is included in the core, and use it to document how you could create a standalone plugin with this functionality.  If you have not already done so, I suggest reading the [Grav Plugin Tutorial](http://learn.getgrav.org/plugins/plugin-tutorial) first to gain a full understanding of what you need to develop a Grav plugin: 
+Mouse drag enabled.
 
-```
-<?php
-namespace Grav\Plugin;
+### touchDrag
+Type: **Boolean** 
+Default: `true`
 
-use Grav\Common\Plugin;
-use RocketTheme\Toolbox\Event\Event;
-use Thunder\Shortcode\Shortcode\ShortcodeInterface;
+Touch drag enabled.
 
+### pullDrag
+Type: **Boolean** 
+Default: `true`
 
-class ShortcodeSafeEmailPlugin extends Plugin
-{
-    protected $handlers;
-    protected $assets;
+Stage pull to edge.
 
-    /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
-    {
-        return [
-            'onShortcodeHandlers' => ['onShortcodeHandlers', 0],
-        ];
-    }
-    
-    /**
-     * Shortcode Event 
-     *
-     * @param Event $e
-     */
-    public function onShortcodeHandlers(Event $e)
-    {
-        // Set handlers and assets from event
-        $this->handlers = $e['handlers'];
-        $this->assets = $e['assets'];
+### freeDrag
+Type: **Boolean**
+Default: `false`
 
-        $this->handlers->add('safe-email', function(ShortcodeInterface $shortcode) {
-            // Load assets if required
-            if ($this->config->get('plugins.shortcode-safe-eamil.load_fontawesome', false)) {
-                $this->assets->add('css', '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
-            }
-    
-            // Get shortcode content and parameters
-            $str = $shortcode->getContent();
-            $icon = $shortcode->getParameter('icon', false);
-            $autolink = $shortcode->getParameter('autolink', false);
-    
-            // Encode email
-            $email = '';
-            $str_len = strlen($str);
-            for ($i = 0; $i < $str_len; $i++) {
-                $email .= "&#" . ord($str[$i]). ";";
-            }
-    
-            // Handle autolinking
-            if ($autolink) {
-                $output = '<a href="mailto:'.$email.'">'.$email.'</a>';
-            } else {
-                $output = $email;
-            }
-    
-            // Handle icon option
-            if ($icon) {
-                $output = '<i class="fa fa-'.$icon.'"></i> ' . $output;
-            }
-    
-            return $output;
-        });
-    }
-}
-```
+Item pull to edge.
+
+### stagePadding
+Type: **Number** 
+Default: `0`
+
+Padding left and right on stage (can see neighbours).
+
+### merge
+Type: **Boolean**
+Default: `false`
+
+Merge items. Looking for data-merge='{number}' inside item..
+
+### mergeFit
+Type: **Boolean** 
+Default: `true`
+
+Fit merged items if screen is smaller than items value.
+
+### autoWidth
+Type: **Boolean** 
+Default: `false`
+
+Set non grid content. Try using width style on divs.
+
+### startPosition
+Type: **Number/String**
+Default: `0`
+
+Start position or URL Hash string like '#id'.
+
+### URLhashListener
+Type: **Boolean**
+Default: `false`
+
+Listen to url hash changes. data-hash on items is required.
+
+### nav
+Type: **Boolean** 
+Default: `false`
+
+Show next/prev buttons.
+
+### rewind
+Type: **Boolean** 
+Default: `true`
+
+Go backwards when the boundary has reached.
+
+### navText
+Type: **Array** 
+Default: `[&#x27;next&#x27;,&#x27;prev&#x27;]`
+
+HTML allowed.
+
+### navElement
+Type: **String** 
+Default: `div`
+
+DOM element type for a single directional navigation link.
+
+### slideBy
+Type: **Number/String**
+Default: `1`
+
+Navigation slide by x. 'page' string can be set to slide by page.
+
+### dots
+Type: **Boolean** 
+Default: `true`
+
+Show dots navigation.
+
+### dotsEach
+Type: **Number/Boolean** 
+Default: `false`
+
+Show dots each x item.
+
+### dotData
+Type: **Boolean** 
+Default: `false`
+
+Used by data-dot content.
+
+### lazyLoad
+Type: **Boolean**
+Default: `false`
+
+Lazy load images. data-src and data-src-retina for highres. Also load images into background inline style if element is not <img>
+
+### lazyContent
+Type: **Boolean** 
+Default: `false`
+
+lazyContent was introduced during beta tests but i removed it from the final release due to bad implementation. It is a nice options so i will work on it in the nearest feature.
+
+### autoplay
+Type: **Boolean**
+Default: `false`
+
+Autoplay.
+
+### autoplayTimeout
+Type: **Number** 
+Default: `5000`
+
+Autoplay interval timeout.
+
+### autoplayHoverPause
+Type: **Boolean**
+Default: `false`
+
+Pause on mouse hover.
+
+### smartSpeed
+Type: **Number** 
+Default: `250`
+
+Speed Calculate. More info to come..
+
+### fluidSpeed
+Type: **Boolean**
+Default: `Number`
+
+Speed Calculate. More info to come..
+
+### autoplaySpeed
+Type: **Number/Boolean**
+Default: `false`
+
+autoplay speed.
+
+### navSpeed
+Type: **Number/Boolean** 
+Default: `false`
+
+Navigation speed.
+
+### dotsSpeed
+Type: **Boolean** 
+Default: `Number/Boolean`
+
+Pagination speed.
+
+### dragEndSpeed
+Type: **Number/Boolean**
+Default: `false`
+
+Drag end speed.
+
+### callbacks
+Type: **Boolean**
+Default: `true`
+
+Enable callback events.
+
+### responsive
+Type: **Object**
+Default: `empty object`
+
+Object containing responsive options. Can be set to false to remove responsive capabilities.
+
+### responsiveRefreshRate
+Type: **Number**
+Default: `200`
+
+Responsive refresh rate.
+
+### responsiveBaseElement
+Type: **DOM element**
+Default: `window`
+
+Set on any DOM element. If you care about non responsive browser (like ie8) then use it on main wrapper. This will prevent from crazy resizing.
+
+### video
+Type: **Boolean**
+Default: `false`
+
+Enable fetching YouTube/Vimeo/Vzaar videos.
+
+### videoHeight
+Type: **Number/Boolean** 
+Default: `false`
+
+Set height for videos.
+
+### videoWidth
+Type: **Number/Boolean**
+Default: `false`
+
+Set width for videos.
+
+### animateOut
+Type: **String/Boolean**
+Default: `false`
+
+Class for CSS3 animation out.
+
+### animateInClass
+Type: **String/Boolean** 
+Default: `false`
+
+Class for CSS3 animation in.
+
+### fallbackEasing
+Type: **String**
+Default: `swing`
+
+Easing for CSS2 $.animate.
+
+### info
+Type: **Function**
+Default: `false`
+
+Callback to retrieve basic information (current item/pages/widths). Info function second parameter is Owl DOM object reference.
+
+### nestedItemSelector
+Type: **String/Class** 
+Default: `false`
+
+Use it if owl items are deep nested inside some generated content. E.g 'youritem'. Don't use dot before class name.
+
+### itemElement
+Type: **String** 
+Default: `div`
+
+DOM element type for owl-item.
+
+### stageElement
+Type: **String**
+Default: `div`
+
+DOM element type for owl-stage.
+
+### navContainer
+Type: **String/Class/ID/Boolean**
+Default: `false`
+
+Set your own container for nav.
+
+### dotsContainer
+Type: **String/Class/ID/Boolean** 
+Default: `false`
+
+Set your own container for nav.
+
