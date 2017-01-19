@@ -1,0 +1,14 @@
+{% set owl_id = 'owl-' ~ hash %}
+<div class="owl-carousel owl-theme" id="{{ owl_id }}">
+    {{ owl_items|regex_replace('(^\n?<p>|<\/p>$)','') }}
+</div>
+<script>
+    $(document).ready(function(){
+        $("#{{ owl_id }}").owlCarousel({
+            {% for name,param in params %}
+            {{ name }}: {{ param }},
+            {% endfor %}
+        });
+    });
+</script>
+
