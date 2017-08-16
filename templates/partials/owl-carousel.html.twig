@@ -2,13 +2,9 @@
 <div class="owl-carousel owl-theme" id="{{ owl_id }}">
     {{ owl_items|regex_replace('(^\n?<p>|<\/p>$)','') }}
 </div>
-<script>
-    $(document).ready(function(){
-        $("#{{ owl_id }}").owlCarousel({
-            {% for name,param in params %}
-            {{ name }}: {{ param }},
-            {% endfor %}
-        });
-    });
-</script>
-
+{%  set owl_options = '' %}
+{%  for name,param in params %}
+    {% set owl_options = owl_options ~ name ~ ':' ~ param ~',' %}
+{% endfor %}
+{% do assets.addInlineJs(' $(document).ready(function(){ $("#' ~
+owl_id ~ '").owlCarousel({' ~ owl_options ~ '}); }); ') %}
