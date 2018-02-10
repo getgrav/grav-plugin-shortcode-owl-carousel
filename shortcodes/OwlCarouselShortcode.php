@@ -22,7 +22,7 @@ class OwlCarouselShortcode extends Shortcode
             }
             // load built-in-css
             if ($this->config->get('plugins.shortcode-owl-carousel.built_in_css', false)) {
-                $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/shortcode.owl.carousel.css');
+                $this->shortcode->addAssets('css', ['plugin://shortcode-owl-carousel/css/shortcode.owl.carousel.css', 5]);
             }
 
             $hash = $this->shortcode->getId($sc);
