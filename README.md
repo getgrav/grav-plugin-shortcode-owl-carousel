@@ -25,7 +25,7 @@ The **Shortcode Owl Carousel** plugin makes it trivial to create [Owl Carousel](
 Typically a plugin should be installed via [GPM](http://learn.getgrav.org/advanced/grav-gpm) (Grav Package Manager):
 
 ```
-$ bin/gpm install shortcode-grav-carousel
+$ bin/gpm install shortcode-owl-carousel
 ```
 
 Alternatively it can be installed via the [Admin Plugin](http://learn.getgrav.org/admin-panel/plugins)
