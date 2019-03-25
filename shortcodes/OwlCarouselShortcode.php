@@ -14,15 +14,15 @@ class OwlCarouselShortcode extends Shortcode
             // Add assets
             $this->shortcode->addAssets('js', ['jquery', 101]);
             $this->shortcode->addAssets('js', 'plugin://shortcode-owl-carousel/js/owl.carousel.min.js');
-            $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.carousel.min.css');
-            $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.theme.default.min.css');
+            $this->shortcode->addAssets('css', ['plugin://shortcode-owl-carousel/css/owl.carousel.min.css', 9]);
+            $this->shortcode->addAssets('css', ['plugin://shortcode-owl-carousel/css/owl.theme.default.min.css', 8]);
             // load animate.css if required
             if ($sc->getParameter('animate') == 'true') {
                 $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/animate.css');
             }
             // load built-in-css
             if ($this->config->get('plugins.shortcode-owl-carousel.built_in_css', false)) {
-                $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/shortcode.owl.carousel.css');
+                $this->shortcode->addAssets('css', ['plugin://shortcode-owl-carousel/css/shortcode.owl.carousel.css', 7]);
             }
 
             $hash = $this->shortcode->getId($sc);
