@@ -3,8 +3,6 @@ namespace Grav\Plugin;
 
 use Grav\Common\Plugin;
 use RocketTheme\Toolbox\Event\Event;
-use Thunder\Shortcode\Shortcode\ShortcodeInterface;
-
 
 class ShortcodeOwlCarouselPlugin extends Plugin
 {
