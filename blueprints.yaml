@@ -1,5 +1,5 @@
 name: Shortcode Owl Carousel
-version: 1.0.1
+version: 1.0.2
 description: "This plugin provides a shortcode for Owl Carousel slider"
 icon: columns
 author:
@@ -13,7 +13,7 @@ bugs: https://github.com/getgrav/grav-plugin-shortcode-owl-carousel/issues
 license: MIT
 
 dependencies:
-  - shortcode-core
+  - { name: shortcode-core, version: '>=4.1.0' }
 
 form:
   validation: strict
