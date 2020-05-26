@@ -12,12 +12,30 @@ class OwlCarouselShortcode extends Shortcode
 
             $id = 'owl-' . $this->shortcode->getId($sc);
 
+            // fix type of parameters value for json_encode
+            $params = $sc->getParameters();
+            foreach ($params as $key => $value) {
+                if ($key === "responsive") {
+                    // value is json not string
+                    $value = preg_replace('/(\w+)/','"$1"',$value);
+                    $value = preg_replace('/"(true|false)"/','$1',$value);
+                    $params[$key] = json_decode($value,true);
+                } else {
+                    // value is boolean or string
+                    if ($value === "true") {
+                        $params[$key] = true;
+                    } elseif ($value === "false") {
+                        $params[$key] = false;
+                    } // else: keep value as string
+                }
+            }
+
             // Add assets
             $this->shortcode->addAssets('js', ['jquery', 101]);
             $this->shortcode->addAssets('js', 'plugin://shortcode-owl-carousel/js/owl.carousel.min.js');
             $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.carousel.min.css');
             $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.theme.default.min.css');
-            $this->shortcode->addAssets('inlinejs', '$(document).ready(function(){ $("#' . $id . '").owlCarousel(' . json_encode($sc->getParameters(), JSON_NUMERIC_CHECK) . '); }); ');
+            $this->shortcode->addAssets('inlinejs', '$(document).ready(function(){ $("#' . $id . '").owlCarousel(' . json_encode($params, JSON_NUMERIC_CHECK) . '); }); ');
 
             // load animate.css if required
             if ($sc->getParameter('animate') == 'true') {
