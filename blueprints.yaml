@@ -1,5 +1,7 @@
 name: Shortcode Owl Carousel
-version: 1.0.2
+slug: shortcode-owl-carousel
+type: plugin
+version: 1.0.3
 description: "This plugin provides a shortcode for Owl Carousel slider"
 icon: columns
 author:
