@@ -1,5 +1,5 @@
 # v1.0.4
-## mm/dd/2021
+## 03/12/2021
 
 1. [](#bugfix)
    * Fixed raw HTML shown instead of an image [#18](https://github.com/getgrav/grav-plugin-shortcode-owl-carousel/issues/18)
