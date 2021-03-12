@@ -1,4 +1,4 @@
 <div class="owl-carousel owl-theme" id="{{ owl_id }}">
-    {{ owl_items|regex_replace('(^\n?<p>|<\/p>$)','') }}
+    {{ owl_items|regex_replace('(^\n?<p>|<\/p>$)','')|raw }}
 </div>
 
