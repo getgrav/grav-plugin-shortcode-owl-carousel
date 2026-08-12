@@ -35,7 +35,7 @@ class OwlCarouselShortcode extends Shortcode
             $this->shortcode->addAssets('js', 'plugin://shortcode-owl-carousel/js/owl.carousel.min.js');
             $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.carousel.min.css');
             $this->shortcode->addAssets('css', 'plugin://shortcode-owl-carousel/css/owl.theme.default.min.css');
-            $this->shortcode->addAssets('inlinejs', '$(document).ready(function(){ $("#' . $id . '").owlCarousel(' . json_encode($params, JSON_NUMERIC_CHECK) . '); }); ');
+            $this->shortcode->addAssets('inlinejs', '$(window).on("load", function(){ $("#' . $id . '").owlCarousel(' . json_encode($params, JSON_NUMERIC_CHECK) . '); }); ');
 
             // load animate.css if required
             if ($sc->getParameter('animate') == 'true') {
